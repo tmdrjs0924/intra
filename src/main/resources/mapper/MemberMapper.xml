@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.example.demo.mapper.MemberMapper">
+    <select id="login" resultType="com.example.demo.vo.MemberVo">
+    	select empId, name, level from member where userid=#{userid} and pwd=#{pwd}
+    </select>
+    
+    <select id="getDepart" resultType="com.example.demo.vo.DepartVo">
+    	select * from depart where code!='00'
+    </select>
+    
+    <insert id="member_input_ok">
+    	insert into member(userid,pwd,name,empId,depart,level,joining) values(#{userid},#{pwd},#{name},#{empId},#{depart},#{level},now())
+    </insert>
+    
+    <select id="getEmpId" resultType="int">
+    	select ifnull(count(*), 0)+1 from member
+    </select>
+    
+    <select id="getMember" resultType="com.example.demo.vo.MemberVo">
+    	select member.*, depart.name as depart_name from member, depart where empId=#{empId} and member.depart=depart.code
+    </select>
+    
+    <select id="getCommute" resultType="com.example.demo.vo.CommuteVo">
+    	select * from commute where date=#{date} and empId=#{empId}
+    </select>
+    
+    <insert id="toWork">
+    	insert into commute(towork,date,empId) values(curtime(),#{date},#{empId})
+    </insert>
+    
+    <update id="toHome">
+    	update commute set tohome=curtime() where date=#{date} and empId=#{empId}
+    </update>
+  </mapper>
