@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.demo.vo.CommuteVo;
 import com.example.demo.vo.DepartVo;
 import com.example.demo.vo.MemberVo;
+import com.example.demo.vo.MemoVo;
 
 @Mapper
 public interface MemberMapper {
@@ -18,4 +19,11 @@ public interface MemberMapper {
 	public CommuteVo getCommute(String date, String empId);
 	public void toWork(String date, String empId);
 	public void toHome(String date, String empId);
+	public ArrayList<CommuteVo> member_commute(String date);
+	public ArrayList<MemberVo> getName(String depart);
+	public void send_ok(MemoVo mvo);
+	public int totalReceiveMemo(String receiver);
+	public int readReceiveMemo(String receiver);
+	public int totalSendMemo(String sender);
+	public int readSendMemo(String sender);
 }

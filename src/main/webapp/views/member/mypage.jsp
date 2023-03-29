@@ -25,10 +25,11 @@
 			font-weight:600;
 		}
 		.member_info,
-		.commute_info {
+		.commute_info,
+		.memo_info {
 			width:800px;
 			margin:auto;
-			margin-bottom:30px;
+			margin-bottom:50px;
 			border-collapse:collapse;
 		}
 		.member_info td,
@@ -46,7 +47,17 @@
 			width:300px;
 			text-indent:5px;
 		}
+		.memo_info #text {
+			font-size:14px;
+		}
 	</style>
+	<script>
+		function openit(){
+			var x=(window.screen.width/2)-(400/2);
+			var y=(window.screen.height/2)-(400/2);
+			window.open("send","","width=400,height=230,left="+x+",top="+y);
+		}
+	</script>
 </head>
 <body>
 	<section>
@@ -78,7 +89,7 @@
 			</tr>
 			<tr>
 				<td>주소</td>
-				<td colspan="3">${mvo.address}, ${mvo.address_etc}</td>
+				<td colspan="3">${mvo.address} ${mvo.address_etc}</td>
 			</tr>
 			<tr>
 				<td>이메일</td>
@@ -98,7 +109,20 @@
 			</tr>
 		</table>
 		
-		
+		<table class="memo_info">
+			<caption><h3>쪽지함</h3></caption>
+			<tr>
+				<td colspan="2"><input type="button" value="쪽지쓰기" onclick="openit()"></td>
+			</tr>
+			<tr>
+				<td>받은쪽지</td>
+				<td>보낸쪽지</td>
+			</tr>
+			<tr>
+				<td>총 ${totalReceiveMemo}건 / 읽음 ${readReceiveMemo} / 안읽음 ${totalReceiveMemo-readReceiveMemo}</td>
+				<td>총 ${totalSendMemo}건 / 읽음 ${readSendMemo} / 안읽음 ${totalSendMemo-readSendMemo}</td>
+			</tr>
+		</table>
 	</section>
 </body>
 </html>

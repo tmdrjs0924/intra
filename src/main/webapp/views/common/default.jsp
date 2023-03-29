@@ -55,6 +55,7 @@
 			width:1000px;
 			height:100px;
 			margin:auto;
+			margin-top:100px;
 			text-align:center;
 		}
 	</style>
@@ -76,6 +77,10 @@
 		<c:if test="${level>=60}">
 			 │ 
 			<a href="../member/member_input"> 사원추가 </a>
+		</c:if>
+		<c:if test="${level>=100}">
+			 │ 
+			<a href="../member/member_commute"> 출퇴기록 </a>
 		</c:if>
 	</header>
 	

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.example.demo.mapper.MemberMapper;
 import com.example.demo.vo.CommuteVo;
 import com.example.demo.vo.DepartVo;
 import com.example.demo.vo.MemberVo;
+import com.example.demo.vo.MemoVo;
 
 @Service
 @Qualifier("ms")
@@ -78,7 +80,10 @@ public class MemberServiceImpl implements MemberService {
 		model.addAttribute("cvo", cvo);
 		
 		//사원간 쪽지
-		
+		model.addAttribute("totalReceiveMemo", mapper.totalReceiveMemo(empId));
+		model.addAttribute("readReceiveMemo", mapper.readReceiveMemo(empId));
+		model.addAttribute("totalSendMemo", mapper.totalSendMemo(empId));
+		model.addAttribute("readSendMemo", mapper.readSendMemo(empId));
 		
 		return "/member/mypage";
 	}
@@ -98,4 +103,39 @@ public class MemberServiceImpl implements MemberService {
 		mapper.toHome(date, empId);
 		return "redirect:/member/mypage";
 	}
+	
+	@Override
+	public String member_commute(HttpServletRequest request, Model model) {
+		String date=LocalDate.now().toString();
+		if(request.getParameter(date)!=null)
+			date=request.getParameter("date");
+		model.addAttribute("date", date);
+		model.addAttribute("list", mapper.member_commute(date));
+		
+		//상태: 정상(0), 지각(1), 조퇴(2), 지각&조퇴(3)
+		
+		return "/member/member_commute";
+	}
+	
+	@Override
+	public String send(Model model, HttpSession session) {
+		model.addAttribute("sender", session.getAttribute("empId").toString());
+		model.addAttribute("list", mapper.getDepart());
+		return "/member/send";
+	}
+	
+	@Override
+	public ArrayList<MemberVo> getName(HttpServletRequest request, Model model) {
+		String depart="01";
+		if(request.getParameter("depart")!=null)
+			depart=request.getParameter("depart");
+		return mapper.getName(depart);
+	}
+	
+	@Override
+	public String send_ok(MemoVo mvo) {
+		mapper.send_ok(mvo);
+		return "redirect:/member/mypage";
+	}
+	
 }

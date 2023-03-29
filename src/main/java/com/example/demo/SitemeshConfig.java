@@ -8,5 +8,6 @@ public class SitemeshConfig extends ConfigurableSiteMeshFilter {
 	@Override
 	protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
 		builder.addDecoratorPath("/*", "/views/common/default.jsp");
+		builder.addExcludedPath("/member/send");
 	}
 }

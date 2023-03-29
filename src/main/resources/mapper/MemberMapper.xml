@@ -28,10 +28,43 @@
     </select>
     
     <insert id="toWork">
-    	insert into commute(towork,date,empId) values(curtime(),#{date},#{empId})
+    	<![CDATA[
+    	insert into commute(towork,date,empId,state) values(curtime(),#{date},#{empId},'09:00:00'<curtime())
+    	]]>
     </insert>
     
     <update id="toHome">
-    	update commute set tohome=curtime() where date=#{date} and empId=#{empId}
+    	<![CDATA[
+    	update commute set tohome=curtime(), state=if(curtime()>='18:00:00', if(state=0, state, 1), if(state=0, 2, 3))
+    	 where date=#{date} and empId=#{empId}
+    	]]>
     </update>
+    
+    <select id="member_commute" resultType="com.example.demo.vo.CommuteVo">
+    	select commute.*, member.name from commute, member where commute.empId=member.empId and date=#{date}
+    </select>
+    
+    <select id="getName" resultType="com.example.demo.vo.MemberVo">
+    	select name, empId from member where depart=#{param}
+    </select>
+    
+    <insert id="send_ok">
+    	insert into memo(sender,receiver,title,content,date) values(#{sender},#{receiver},#{title},#{content},now())
+    </insert>
+    
+    <select id="totalReceiveMemo" resultType="int">
+    	select count(*) from memo where receiver=#{receiver}
+    </select>
+    
+    <select id="readReceiveMemo" resultType="int">
+    	select count(*) from memo where receiver=#{receiver} and state=1
+    </select>
+    
+    <select id="totalSendMemo" resultType="int">
+    	select count(*) from memo where sender=#{sender}
+    </select>
+    
+    <select id="readSendMemo" resultType="int">
+    	select count(*) from memo where sender=#{sender} and state=1
+    </select>
   </mapper>

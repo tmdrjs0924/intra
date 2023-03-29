@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,9 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.MemberService;
 import com.example.demo.vo.MemberVo;
+import com.example.demo.vo.MemoVo;
 
 @Controller
 public class MemberController {
@@ -65,5 +69,25 @@ public class MemberController {
 	@RequestMapping("/member/tohome")
 	public String tohome(HttpSession session) {
 		return service.tohome(session);
+	}
+	
+	@RequestMapping("/member/member_commute")
+	public String member_commute(HttpServletRequest request, Model model) {
+		return service.member_commute(request, model);
+	}
+	
+	@RequestMapping("/member/send")
+	public String send(Model model, HttpSession session) {
+		return service.send(model, session);
+	}
+	
+	@RequestMapping("/member/getName")
+	public @ResponseBody ArrayList<MemberVo> getName(HttpServletRequest request, Model model) {
+		return service.getName(request, model);
+	}
+	
+	@RequestMapping("/member/send_ok")
+	public String send_ok(MemoVo mvo) {
+		return service.send_ok(mvo);
 	}
 }
