@@ -26,4 +26,9 @@ public interface MemberMapper {
 	public int readReceiveMemo(String receiver);
 	public int totalSendMemo(String sender);
 	public int readSendMemo(String sender);
+	public ArrayList<MemoVo> getSendMemo(String empId);
+	public ArrayList<MemoVo> getReceiveMemo(String empId);
+	public MemoVo receiveView(String id);
+	public MemoVo sendView(String id);
+	public void stateUpdate(String id);
 }

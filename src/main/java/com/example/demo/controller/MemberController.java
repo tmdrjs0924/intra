@@ -37,8 +37,8 @@ public class MemberController {
 	}
 	
 	@PostMapping("/member/login")
-	public String login(MemberVo mvo, HttpSession session) {
-		return service.login(mvo, session);
+	public String login(MemberVo mvo, HttpSession session, Model model, HttpServletRequest request) {
+		return service.login(mvo, session, model, request);
 	}
 	
 	@RequestMapping("/member/logout")
@@ -89,5 +89,25 @@ public class MemberController {
 	@RequestMapping("/member/send_ok")
 	public String send_ok(MemoVo mvo) {
 		return service.send_ok(mvo);
+	}
+	
+	@RequestMapping("/member/getSendMemo")
+	public @ResponseBody ArrayList<MemoVo> getSendMemo(HttpSession session) {
+		return service.getSendMemo(session);
+	}
+	
+	@RequestMapping("/member/getReceiveMemo")
+	public @ResponseBody ArrayList<MemoVo> getReceiveMemo(HttpSession session) {
+		return service.getReceiveMemo(session);
+	}
+	
+	@RequestMapping("/member/receiveView")
+	public @ResponseBody MemoVo receiveView(String id){
+		return service.receiveView(id);
+	}
+	
+	@RequestMapping("/member/sendView")
+	public @ResponseBody MemoVo sendView(String id){
+		return service.sendView(id);
 	}
 }

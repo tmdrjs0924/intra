@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.example.demo.mapper.MemberMapper">
     <select id="login" resultType="com.example.demo.vo.MemberVo">
-    	select empId, name, level from member where userid=#{userid} and pwd=#{pwd}
+    	select empId, depart, level from member where userid=#{userid} and pwd=#{pwd}
     </select>
     
     <select id="getDepart" resultType="com.example.demo.vo.DepartVo">
@@ -66,5 +66,25 @@
     
     <select id="readSendMemo" resultType="int">
     	select count(*) from memo where sender=#{sender} and state=1
+    </select>
+    
+    <select id="getSendMemo" resultType="com.example.demo.vo.MemoVo">
+    	select id, title, receiver, date, state, (select name from member where empId=receiver) as name from memo where sender=#{sender}
+    </select>
+    
+    <select id="getReceiveMemo" resultType="com.example.demo.vo.MemoVo">
+    	select id, title, sender, date, state, (select name from member where empId=sender) as name from memo where receiver=#{receiver}
+    </select>
+    
+    <select id="receiveView" resultType="com.example.demo.vo.MemoVo">
+    	select *, (select name from member where empId=sender) as name from memo where id=#{id}
+    </select>
+    
+    <update id="stateUpdate">
+    	update memo set state=1 where id=#{id}
+    </update>
+    
+    <select id="sendView" resultType="com.example.demo.vo.MemoVo">
+    	select *, (select name from member where empId=receiver) as name from memo where id=#{id}
     </select>
   </mapper>

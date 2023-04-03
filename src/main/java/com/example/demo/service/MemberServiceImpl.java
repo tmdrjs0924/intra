@@ -25,15 +25,16 @@ public class MemberServiceImpl implements MemberService {
 	private MemberMapper mapper;
 	
 	@Override
-	public String login(MemberVo mvo, HttpSession session) {
+	public String login(MemberVo mvo, HttpSession session, Model model, HttpServletRequest request) {
 		MemberVo mvo2=mapper.login(mvo);
 		if(mvo2!=null) {
 			session.setAttribute("empId", mvo2.getEmpId());
-			session.setAttribute("name", mvo2.getName());
+			session.setAttribute("depart", mvo2.getDepart());
 			session.setAttribute("level", mvo2.getLevel());
 			return "redirect:/main/main";
 		}
 		else {
+			model.addAttribute("chk", request.getParameter("chk"));
 			return "redirect:/member/login?chk=1";
 		}
 	}
@@ -107,8 +108,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String member_commute(HttpServletRequest request, Model model) {
 		String date=LocalDate.now().toString();
-		if(request.getParameter(date)!=null)
-			date=request.getParameter("date");
+		if(request.getParameter("date")!=null)
+			date=request.getParameter("date").toString();
 		model.addAttribute("date", date);
 		model.addAttribute("list", mapper.member_commute(date));
 		
@@ -138,4 +139,30 @@ public class MemberServiceImpl implements MemberService {
 		return "redirect:/member/mypage";
 	}
 	
+	@Override
+	public ArrayList<MemoVo> getSendMemo(HttpSession session) {
+		String empId=session.getAttribute("empId").toString();
+		return mapper.getSendMemo(empId);
+	}
+	
+	@Override
+	public ArrayList<MemoVo> getReceiveMemo(HttpSession session) {
+		String empId=session.getAttribute("empId").toString();
+		return mapper.getReceiveMemo(empId);
+	}
+	
+	@Override
+	public MemoVo receiveView(String id){
+		MemoVo mvo=mapper.receiveView(id);
+		mvo.setContent(mvo.getContent().replace("\r\n", "<br>"));
+		mapper.stateUpdate(id);
+		return mvo;
+	}
+	
+	@Override
+	public MemoVo sendView(String id){
+		MemoVo mvo=mapper.sendView(id);
+		mvo.setContent(mvo.getContent().replace("\r\n", "<br>"));
+		return mvo;
+	}
 }

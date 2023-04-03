@@ -38,6 +38,17 @@
 		.commute_info tr td:last-child {
 			width:100px;
 		}
+		.commute_info tr:first-child td {
+			border:none;
+		}
+		#dp {
+			display:flex;
+			justify-content:flex-end;
+		}
+		#datepicker {
+			width:80px;
+			height:15px;
+		}
 	</style>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
@@ -61,13 +72,22 @@
 				changeMonth:true
 			});
 		});
+		function getComm(date){
+			location="member_commute?date="+date;
+		}
 	</script>
 </head>
 <body>
 	<section>
-	<span><input type="text" id="datepicker" name="date" size="8" readonly></span>
 		<table class="commute_info">
-			<caption><h3>출퇴근기록(<label for="datepicker">날짜변경</label>)</h3></caption>
+			<caption><h3>출퇴근기록</h3></caption>
+			<tr>
+				<td colspan="5">
+					<div id="dp">
+						<input type="text" id="datepicker" value="${date}" readonly onchange="getComm(this.value)">
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<th>사원번호</th>
 				<th>사원이름</th>

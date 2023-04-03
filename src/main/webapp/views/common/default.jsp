@@ -66,10 +66,10 @@
 
 	<!-- 로그인 -->
 	<header>
-		<c:if test="${name==null}">
+		<c:if test="${level==null}">
 			<a href="../member/login"> 로그인 </a>
 		</c:if>
-		<c:if test="${name!=null}">
+		<c:if test="${level!=null}">
 			<a href="../member/logout"> 로그아웃 </a>
 			 │ 
 			<a href="../member/mypage"> 내 정보 </a>
@@ -88,7 +88,7 @@
 	<nav>
 		<div class="menus">
 			<a href="../main/main" class="menu"> 메인 </a>
-			<div class="menu"> 부서조회 </div>
+			<div class="menu"><a href="../board/list"> 게시판 </a></div>
 			<div class="menu"> 근태관리 </div>
 			<div class="menu"> 급여관리 </div>
 			<div class="menu"> 각종서류 </div>

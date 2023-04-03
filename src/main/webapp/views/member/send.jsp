@@ -70,7 +70,7 @@
 <body>
 	<section>
 		<div id="mform">
-			<form name="mform">
+			<form name="mform" method="post" action="send_ok">
 			<input type="hidden" name="sender" value="${sender}">
 			<div>
 				<select name="depart" onchange="getName(this.value)">

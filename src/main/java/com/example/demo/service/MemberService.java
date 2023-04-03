@@ -11,7 +11,7 @@ import com.example.demo.vo.MemberVo;
 import com.example.demo.vo.MemoVo;
 
 public interface MemberService {
-	public String login(MemberVo mvo, HttpSession session);
+	public String login(MemberVo mvo, HttpSession session, Model model, HttpServletRequest request);
 	public String logout(HttpSession session);
 	public String member_input(Model model);
 	public String member_input_ok(MemberVo mvo);
@@ -22,4 +22,8 @@ public interface MemberService {
 	public String send(Model model, HttpSession session);
 	public ArrayList<MemberVo> getName(HttpServletRequest request, Model model);
 	public String send_ok(MemoVo mvo);
+	public ArrayList<MemoVo> getSendMemo(HttpSession session);
+	public ArrayList<MemoVo> getReceiveMemo(HttpSession session);
+	public MemoVo receiveView(String id);
+	public MemoVo sendView(String id);
 }
