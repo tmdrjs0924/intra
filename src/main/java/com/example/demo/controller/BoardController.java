@@ -17,6 +17,7 @@ public class BoardController {
 	//test
 	//test .1
 	//test2
+	//test2.1
 	@Autowired
 	@Qualifier("bs")
 	private BoardService service;
