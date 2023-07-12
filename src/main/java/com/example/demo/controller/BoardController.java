@@ -15,6 +15,7 @@ import com.example.demo.vo.BoardVo;
 @Controller
 public class BoardController {
 	//test
+	//test .1
 	@Autowired
 	@Qualifier("bs")
 	private BoardService service;
